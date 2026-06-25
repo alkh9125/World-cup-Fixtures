@@ -17,6 +17,7 @@ use SCD\Jobs\RecalculationPipeline;
 use SCD\SEO\SeoModule;
 use SCD\Frontend\TemplateLoader;
 use SCD\Frontend\Assets;
+use SCD\Frontend\Rewrites;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -49,6 +50,7 @@ final class Plugin {
 		( new TeamCpt() )->register();
 		( new MatchCpt() )->register();
 		( new ScenarioCpt() )->register();
+		( new Rewrites() )->register();
 
 		( new RestApi() )->register();
 

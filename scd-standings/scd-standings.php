@@ -33,8 +33,17 @@ require_once SCD_STANDINGS_DIR . 'includes/Infrastructure/Database/Schema.php';
 use SCD\Infrastructure\Database\Schema;
 use SCD\Plugin;
 
-register_activation_hook( __FILE__, [ Schema::class, 'install' ] );
-register_deactivation_hook( __FILE__, [ 'SCD\\Jobs\\SyncJob', 'unschedule' ] );
+register_activation_hook( __FILE__, static function () {
+	Schema::install();
+	// CPTs/rewrite rules aren't registered yet at activation time (that
+	// happens on plugins_loaded) - flag it so Rewrites::maybe_flush() can
+	// flush once they are, on the very next init.
+	update_option( 'scd_flush_rewrite_rules', 1 );
+} );
+register_deactivation_hook( __FILE__, static function () {
+	SCD\Jobs\SyncJob::unschedule();
+	flush_rewrite_rules();
+} );
 
 add_action( 'plugins_loaded', static function () {
 	Plugin::instance()->boot();
