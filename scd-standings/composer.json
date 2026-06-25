@@ -1,0 +1,27 @@
+{
+    "name": "saudiopendata/scd-standings",
+    "description": "Live tournament standings, qualification scenarios, and knockout projections for SaudiOpenData.com",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "php": ">=8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "SCD\\": "includes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SCD\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "8.0"
+        }
+    }
+}
