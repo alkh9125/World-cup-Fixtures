@@ -5,6 +5,7 @@ namespace SCD\Admin;
 use SCD\CPT\TournamentCpt;
 use SCD\Infrastructure\Repositories\TournamentRepository;
 use SCD\Jobs\RecalculationPipeline;
+use SCD\Seeder\WorldCup2026Seeder;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -21,6 +22,7 @@ final class Dashboard {
 		add_action( 'admin_menu', [ $this, 'add_menu' ] );
 		add_action( 'admin_post_scd_create_tournament', [ $this, 'handle_create_tournament' ] );
 		add_action( 'admin_post_scd_recalculate', [ $this, 'handle_recalculate' ] );
+		add_action( 'admin_post_scd_seed_world_cup_2026', [ $this, 'handle_seed_world_cup_2026' ] );
 	}
 
 	public function add_menu(): void {
@@ -47,6 +49,14 @@ final class Dashboard {
 			<?php if ( isset( $_GET['scd_notice'] ) ) : ?>
 				<div class="notice notice-success is-dismissible"><p><?php echo esc_html( $this->noticeText( sanitize_key( wp_unslash( $_GET['scd_notice'] ) ) ) ); ?></p></div>
 			<?php endif; ?>
+
+			<h2><?php esc_html_e( 'Demo data', 'scd-standings' ); ?></h2>
+			<p><?php esc_html_e( 'Seed a full FIFA World Cup 2026 dataset (8 groups, 32 teams, two matchdays already played) to try every feature immediately. Safe to click more than once - it does nothing if already seeded.', 'scd-standings' ); ?></p>
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+				<?php wp_nonce_field( 'scd_seed_world_cup_2026' ); ?>
+				<input type="hidden" name="action" value="scd_seed_world_cup_2026">
+				<?php submit_button( __( 'Seed World Cup 2026 demo data', 'scd-standings' ), 'secondary' ); ?>
+			</form>
 
 			<h2><?php esc_html_e( 'Tournaments', 'scd-standings' ); ?></h2>
 			<table class="widefat striped">
@@ -185,10 +195,25 @@ final class Dashboard {
 		exit;
 	}
 
+	public function handle_seed_world_cup_2026(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You are not allowed to do this.', 'scd-standings' ) );
+		}
+
+		check_admin_referer( 'scd_seed_world_cup_2026' );
+
+		$result = WorldCup2026Seeder::run();
+
+		wp_safe_redirect( admin_url( 'admin.php?page=' . self::MENU_SLUG . '&scd_notice=' . ( $result['skipped'] ? 'seed_skipped' : 'seeded' ) ) );
+		exit;
+	}
+
 	private function noticeText( string $key ): string {
 		return match ( $key ) {
 			'tournament_created' => __( 'Tournament created.', 'scd-standings' ),
 			'recalculated'       => __( 'Recalculation complete.', 'scd-standings' ),
+			'seeded'             => __( 'World Cup 2026 demo data seeded.', 'scd-standings' ),
+			'seed_skipped'       => __( 'World Cup 2026 was already seeded - nothing to do.', 'scd-standings' ),
 			default               => '',
 		};
 	}
