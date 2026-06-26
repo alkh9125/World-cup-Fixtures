@@ -10,6 +10,7 @@ use SCD\Domain\QualificationStatusResolver;
 use SCD\Domain\ScenarioEngine;
 use SCD\Domain\StandingsCalculator;
 use SCD\Domain\TieBreak\FifaRuleset;
+use SCD\CPT\ScenarioCpt;
 use SCD\Infrastructure\Cache\CacheManager;
 use SCD\Infrastructure\Repositories\BracketSlotRepository;
 use SCD\Infrastructure\Repositories\GroupRepository;
@@ -198,8 +199,9 @@ final class RecalculationPipeline {
 				foreach ( $results as $outcome => $result ) {
 					$slug    = $this->scenarioSlug( $match, $outcome, $teamNames );
 					$summary = $narrativeGen->generate( $namesAr, $namesEn, $match, $outcome, $result );
+					$postId  = $this->resolveScenarioPostId( $scenarioCacheRepo, $match->matchId, $outcome, $slug, $teamNames, $match );
 
-					$scenarioCacheRepo->upsert( $match->matchId, $outcome, $slug, $summary['ar'], $summary['en'], $result['changes'] );
+					$scenarioCacheRepo->upsert( $match->matchId, $outcome, $slug, $summary['ar'], $summary['en'], $result['changes'], $postId );
 				}
 			}
 		}
@@ -210,6 +212,40 @@ final class RecalculationPipeline {
 		$awaySlug = $teamNames[ $match->awayTeamId ]['slug'] ?? (string) $match->awayTeamId;
 
 		return sanitize_title( "{$homeSlug}-vs-{$awaySlug}-" . str_replace( '_', '-', $outcome ) );
+	}
+
+	/**
+	 * Frontend\Rewrites resolves /{tournament}/scenarios/{slug}/ against a
+	 * real scd_scenario post, so every generated outcome needs one. Reuses
+	 * the existing post across recalculations (keyed by match_id+outcome,
+	 * not slug) so a re-run never orphans/duplicates scenario posts even if
+	 * a team rename changes the slug.
+	 */
+	private function resolveScenarioPostId( ScenarioCacheRepository $scenarioCacheRepo, int $matchId, string $outcome, string $slug, array $teamNames, MatchResult $match ): ?int {
+		$existing = $scenarioCacheRepo->findOne( $matchId, $outcome );
+
+		if ( $existing && ! empty( $existing['post_id'] ) ) {
+			$postId = (int) $existing['post_id'];
+			$post   = get_post( $postId );
+
+			if ( $post && $post->post_name !== $slug ) {
+				wp_update_post( [ 'ID' => $postId, 'post_name' => $slug ] );
+			}
+
+			return $postId;
+		}
+
+		$homeName = $teamNames[ $match->homeTeamId ]['name'] ?? (string) $match->homeTeamId;
+		$awayName = $teamNames[ $match->awayTeamId ]['name'] ?? (string) $match->awayTeamId;
+
+		$postId = wp_insert_post( [
+			'post_type'   => ScenarioCpt::SLUG,
+			'post_title'  => sprintf( '%s vs %s - %s', $homeName, $awayName, str_replace( '_', ' ', $outcome ) ),
+			'post_name'   => $slug,
+			'post_status' => 'publish',
+		], true );
+
+		return is_wp_error( $postId ) ? null : $postId;
 	}
 
 	private function applyOverrides( int $tournamentId, StandingsCacheRepository $standingsCacheRepo ): void {

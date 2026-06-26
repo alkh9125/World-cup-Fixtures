@@ -39,15 +39,24 @@ final class ScenarioCacheRepository {
 		return $row ?: null;
 	}
 
-	public function upsert( int $matchId, string $outcome, string $slug, string $summaryAr, string $summaryEn, array $impact ): void {
+	public function findOne( int $matchId, string $outcome ): ?array {
 		global $wpdb;
 
-		$existing = $wpdb->get_row(
-			$wpdb->prepare( "SELECT id FROM {$this->table} WHERE match_id = %d AND outcome = %s", $matchId, $outcome ),
+		$row = $wpdb->get_row(
+			$wpdb->prepare( "SELECT * FROM {$this->table} WHERE match_id = %d AND outcome = %s", $matchId, $outcome ),
 			ARRAY_A,
 		);
 
+		return $row ?: null;
+	}
+
+	public function upsert( int $matchId, string $outcome, string $slug, string $summaryAr, string $summaryEn, array $impact, ?int $postId = null ): void {
+		global $wpdb;
+
+		$existing = $this->findOne( $matchId, $outcome );
+
 		$data = [
+			'post_id'      => $postId,
 			'match_id'     => $matchId,
 			'outcome'      => $outcome,
 			'slug'         => $slug,
@@ -58,6 +67,10 @@ final class ScenarioCacheRepository {
 		];
 
 		if ( $existing ) {
+			if ( null === $postId ) {
+				unset( $data['post_id'] ); // Keep whatever post_id was already set if the caller didn't resolve one.
+			}
+
 			$wpdb->update( $this->table, $data, [ 'id' => $existing['id'] ] );
 		} else {
 			$wpdb->insert( $this->table, $data );
