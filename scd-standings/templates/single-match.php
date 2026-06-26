@@ -30,7 +30,7 @@ $away           = $teamRepo->find( (int) $match['away_team_id'] );
 $isFinished     = 'finished' === $match['status'];
 ?>
 
-<main class="scd">
+<main class="scd" dir="<?php echo is_rtl() ? 'rtl' : 'ltr'; ?>">
 	<header>
 		<h1>
 			<?php echo esc_html( $home['name_ar'] ?: ( $home['name'] ?? '?' ) ); ?>

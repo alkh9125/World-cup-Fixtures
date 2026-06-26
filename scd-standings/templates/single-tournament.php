@@ -23,7 +23,7 @@ if ( ! $tournament ) {
 $groups = ( new GroupRepository() )->findForTournament( (int) $tournament['id'] );
 ?>
 
-<main class="scd">
+<main class="scd" dir="<?php echo is_rtl() ? 'rtl' : 'ltr'; ?>">
 	<header>
 		<h1>
 			<?php if ( $tournament['name_ar'] ) : ?>

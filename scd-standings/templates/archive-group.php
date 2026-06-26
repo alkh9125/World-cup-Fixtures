@@ -45,7 +45,7 @@ $simulatorMatches = array_map(
 );
 ?>
 
-<main class="scd">
+<main class="scd" dir="<?php echo is_rtl() ? 'rtl' : 'ltr'; ?>">
 	<header>
 		<h1>
 			<?php echo esc_html( $group['name_ar'] ?: $group['name'] ); ?>

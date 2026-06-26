@@ -25,7 +25,7 @@ $tournament     = ( new TournamentRepository() )->findBySlug( $tournamentSlug );
 $rounds         = [ 'round_of_16', 'quarter_final', 'semi_final', 'third_place', 'final' ];
 ?>
 
-<main class="scd">
+<main class="scd" dir="<?php echo is_rtl() ? 'rtl' : 'ltr'; ?>">
 	<header>
 		<h1>
 			<?php if ( $team['logo_url'] ) : ?>

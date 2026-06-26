@@ -3,7 +3,7 @@
  * Plugin Name:       SCD Standings & Scenarios
  * Plugin URI:        https://saudiopendata.com
  * Description:       Live tournament standings, qualification scenarios, knockout projections, and an interactive what-if simulator for SaudiOpenData.com.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            SaudiOpenData
@@ -15,7 +15,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'SCD_STANDINGS_VERSION', '1.0.0' );
+define( 'SCD_STANDINGS_VERSION', '1.1.0' );
 define( 'SCD_STANDINGS_FILE', __FILE__ );
 define( 'SCD_STANDINGS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SCD_STANDINGS_URL', plugin_dir_url( __FILE__ ) );

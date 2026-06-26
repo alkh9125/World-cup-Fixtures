@@ -104,3 +104,21 @@ vendor/bin/phpunit
 
 The PHPUnit suite covers the Domain layer only (pure PHP, no WordPress
 bootstrap needed beyond a stubbed `ABSPATH` in `tests/bootstrap.php`).
+
+## Changelog
+
+### 1.1.0
+- Arabic translation (`languages/scd-standings-ar.mo`) for all public-facing
+  template strings (standings, what-if simulator, opponents, bracket,
+  error/loading states).
+- Country flags for every seeded demo team, vendored locally under
+  `assets/img/flags/` (no CDN dependency, same approach as the bundled
+  Alpine.js).
+- `<main>` now renders with `dir="rtl"`/`dir="ltr"` per `is_rtl()`, so the
+  plugin's own markup degrades correctly even on themes that don't set
+  text direction on `<html>`.
+
+### 1.0.0
+- Initial release: standings, qualification scenarios, knockout bracket
+  projection, what-if simulator, REST API, admin dashboard, SEO module,
+  World Cup 2026 demo seeder.
