@@ -87,6 +87,16 @@ final class Rewrites {
 			'index.php?post_type=' . TournamentCpt::SLUG . '&name=$matches[1]&scd_route=ambiguous&scd_tournament_slug=$matches[1]&scd_slug2=$matches[2]',
 			'top',
 		);
+
+		// Tournament hub itself - TournamentCpt is registered with
+		// 'rewrite' => false (an empty slug there does not produce a
+		// root-level rule, WordPress falls back to the post type name) so
+		// this single-segment match is the only thing that resolves it.
+		add_rewrite_rule(
+			'^([^/]+)/?$',
+			'index.php?post_type=' . TournamentCpt::SLUG . '&name=$matches[1]&scd_route=tournament&scd_tournament_slug=$matches[1]',
+			'top',
+		);
 	}
 
 	public function maybe_flush(): void {
@@ -145,6 +155,12 @@ final class Rewrites {
 
 		if ( ! $tournament ) {
 			$this->force_404();
+			return;
+		}
+
+		if ( 'tournament' === $route ) {
+			// Anchored on the tournament's own (valid) post - nothing
+			// further to validate.
 			return;
 		}
 
@@ -237,6 +253,10 @@ final class Rewrites {
 	 * this takes its most recent tournament assignment as canonical.
 	 */
 	public function build_permalink( string $permalink, \WP_Post $post ): string {
+		if ( TournamentCpt::SLUG === $post->post_type ) {
+			return $this->tournament_permalink( $post ) ?? $permalink;
+		}
+
 		if ( TeamCpt::SLUG === $post->post_type ) {
 			return $this->team_permalink( $post ) ?? $permalink;
 		}
@@ -250,6 +270,16 @@ final class Rewrites {
 		}
 
 		return $permalink;
+	}
+
+	private function tournament_permalink( \WP_Post $post ): ?string {
+		$tournament = ( new TournamentRepository() )->findByPostId( $post->ID );
+
+		if ( ! $tournament ) {
+			return null;
+		}
+
+		return home_url( sprintf( '/%s/', $tournament['slug'] ) );
 	}
 
 	private function team_permalink( \WP_Post $post ): ?string {

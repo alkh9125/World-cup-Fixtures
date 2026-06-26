@@ -59,8 +59,8 @@ final class NarrativeGenerator {
 		$homeEn = $teamNamesEn[ $match->homeTeamId ] ?? '';
 		$awayEn = $teamNamesEn[ $match->awayTeamId ] ?? '';
 
-		$outcomeWinnerAr = self::OUTCOME_HOME_WIN === $outcome ? $homeAr : $awayAr;
-		$outcomeWinnerEn = self::OUTCOME_HOME_WIN === $outcome ? $homeEn : $awayEn;
+		$outcomeWinnerAr = ScenarioEngine::OUTCOME_HOME_WIN === $outcome ? $homeAr : $awayAr;
+		$outcomeWinnerEn = ScenarioEngine::OUTCOME_HOME_WIN === $outcome ? $homeEn : $awayEn;
 
 		$headingAr = sprintf(
 			'إذا انتهت مباراة %1$s و%2$s %3$s:',

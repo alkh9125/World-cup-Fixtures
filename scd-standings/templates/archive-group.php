@@ -90,7 +90,7 @@ $simulatorMatches = array_map(
 
 	<?php if ( ! empty( $simulatorMatches ) ) : ?>
 		<section
-			x-data="scdSimulator(<?php echo (int) $group['id']; ?>, <?php echo wp_json_encode( $simulatorMatches ); ?>)"
+			x-data="<?php echo esc_attr( sprintf( 'scdSimulator(%d, %s)', $group['id'], wp_json_encode( $simulatorMatches ) ) ); ?>"
 			x-cloak
 		>
 			<h2><?php esc_html_e( 'What if…?', 'scd-standings' ); ?></h2>

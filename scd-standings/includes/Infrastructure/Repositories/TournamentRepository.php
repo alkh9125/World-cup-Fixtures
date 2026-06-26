@@ -40,6 +40,14 @@ final class TournamentRepository {
 		return $row ?: null;
 	}
 
+	public function findByPostId( int $postId ): ?array {
+		global $wpdb;
+
+		$row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$this->table} WHERE post_id = %d", $postId ), ARRAY_A );
+
+		return $row ?: null;
+	}
+
 	/** @return array[] */
 	public function all(): array {
 		global $wpdb;

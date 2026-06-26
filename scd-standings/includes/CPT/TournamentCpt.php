@@ -28,7 +28,7 @@ final class TournamentCpt {
 			'has_archive'         => false,
 			'menu_icon'           => 'dashicons-awards',
 			'supports'            => [ 'title', 'editor', 'thumbnail', 'custom-fields' ],
-			'rewrite'             => [ 'slug' => '', 'with_front' => false ],
+			'rewrite'             => false,
 			'show_in_menu'        => 'scd-standings',
 		] );
 	}
