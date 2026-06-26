@@ -1,0 +1,103 @@
+.scd {
+	max-width: 960px;
+	margin: 0 auto;
+}
+
+.scd-title-ar {
+	direction: rtl;
+	font-family: inherit;
+}
+
+.scd-title-en {
+	color: #555;
+	font-size: 0.65em;
+	font-weight: normal;
+}
+
+.scd-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 1em 0;
+}
+
+.scd-table th,
+.scd-table td {
+	border: 1px solid #ddd;
+	padding: 0.5em 0.75em;
+	text-align: center;
+}
+
+.scd-table th:first-child,
+.scd-table td:first-child {
+	text-align: start;
+}
+
+.scd-table .scd-team-name {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+}
+
+.scd-table .scd-team-logo {
+	width: 20px;
+	height: 20px;
+}
+
+.scd-qual-qualified {
+	background: #e6f4ea;
+}
+
+.scd-qual-eliminated {
+	background: #fce8e6;
+	opacity: 0.85;
+}
+
+.scd-qual-possible {
+	background: #fff;
+}
+
+.scd-bracket {
+	display: flex;
+	gap: 1.5em;
+	overflow-x: auto;
+	padding: 1em 0;
+}
+
+.scd-bracket-round {
+	min-width: 180px;
+}
+
+.scd-bracket-slot {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 0.5em;
+	margin-bottom: 1em;
+}
+
+.scd-simulator-row {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.scd-simulator-row input[type='number'] {
+	width: 3em;
+}
+
+.scd-scenario-card {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 1em;
+	margin-bottom: 1em;
+}
+
+.scd-loading,
+.scd-error {
+	color: #777;
+	font-style: italic;
+}
+
+[x-cloak] {
+	display: none !important;
+}
