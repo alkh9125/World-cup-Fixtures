@@ -68,4 +68,15 @@ final class StandingsCacheRepository {
 			] );
 		}
 	}
+
+	/** Overlays a manual correction onto an already-cached row - see Infrastructure\Repositories\OverrideRepository. */
+	public function applyFieldOverride( int $tournamentId, int $teamId, string $field, $value ): void {
+		global $wpdb;
+
+		$wpdb->update(
+			$this->table,
+			[ $field => $value ],
+			[ 'tournament_id' => $tournamentId, 'team_id' => $teamId ],
+		);
+	}
 }

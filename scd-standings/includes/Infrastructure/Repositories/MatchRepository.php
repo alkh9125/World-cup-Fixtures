@@ -61,6 +61,16 @@ final class MatchRepository {
 		) ?: [];
 	}
 
+	/** @return array[] every raw row for a tournament, ordered by kickoff time */
+	public function allForTournament( int $tournamentId ): array {
+		global $wpdb;
+
+		return $wpdb->get_results(
+			$wpdb->prepare( "SELECT * FROM {$this->table} WHERE tournament_id = %d ORDER BY kickoff_at ASC", $tournamentId ),
+			ARRAY_A,
+		) ?: [];
+	}
+
 	/** @return array[] raw rows for a tournament round (e.g. 'round_of_16') */
 	public function findForRound( int $tournamentId, string $round ): array {
 		global $wpdb;
