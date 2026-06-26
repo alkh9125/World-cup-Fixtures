@@ -1,0 +1,108 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SCD Standings & Scenarios 1.0.0\n"
+"Report-Msgid-Bugs-To: https://saudiopendata.com\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"X-Domain: scd-standings\n"
+
+#. Frontend public-facing strings only (templates/*.php). Admin dashboard
+#. strings are intentionally left in English for now.
+msgid "Back to the match"
+msgstr "العودة إلى المباراة"
+
+msgid "Could not load opponents."
+msgstr "تعذر تحميل الخصوم المحتملين."
+
+msgid "Could not load the bracket."
+msgstr "تعذر تحميل الدور الإقصائي."
+
+msgid "Could not load the scenarios."
+msgstr "تعذر تحميل السيناريوهات."
+
+msgid "Could not load the standings."
+msgstr "تعذر تحميل الترتيب."
+
+msgid "Could not run the simulation."
+msgstr "تعذر تشغيل المحاكاة."
+
+msgid "D"
+msgstr "تعادل"
+
+msgid "Final score"
+msgstr "النتيجة النهائية"
+
+msgid "GD"
+msgstr "ف.أ"
+
+msgid "Groups"
+msgstr "المجموعات"
+
+msgid "Knockout bracket projection"
+msgstr "توقعات الدور الإقصائي"
+
+msgid "L"
+msgstr "خسر"
+
+msgid "Loading…"
+msgstr "جارٍ التحميل…"
+
+msgid "No bracket has been published for this tournament yet."
+msgstr "لم يُنشر الدور الإقصائي لهذه البطولة بعد."
+
+msgid "No opponent possibilities projected for this round yet."
+msgstr "لا توجد توقعات للخصوم في هذه الجولة بعد."
+
+msgid "P"
+msgstr "لعب"
+
+msgid "Pick scores for the remaining matches and see how the table would look - nothing here is saved."
+msgstr "اختر نتائج المباريات المتبقية لمعرفة شكل الترتيب المتوقع - لا يُحفظ أي شيء هنا."
+
+msgid "Possible opponents"
+msgstr "الخصوم المحتملون"
+
+msgid "Pts"
+msgstr "نقاط"
+
+msgid "Read more"
+msgstr "اقرأ المزيد"
+
+msgid "Reset"
+msgstr "إعادة ضبط"
+
+msgid "Round:"
+msgstr "الجولة:"
+
+msgid "Simulate"
+msgstr "محاكاة"
+
+msgid "Standings"
+msgstr "الترتيب"
+
+msgid "Standings impact"
+msgstr "تأثير على الترتيب"
+
+msgid "Status"
+msgstr "الحالة"
+
+msgid "Team"
+msgstr "الفريق"
+
+msgid "W"
+msgstr "فاز"
+
+msgid "What if…?"
+msgstr "ماذا لو…؟"
+
+msgid "What this result could mean"
+msgstr "ماذا تعني هذه النتيجة"
+
+msgid "pens"
+msgstr "ركلات الترجيح"
+
+msgid "— Select a round —"
+msgstr "— اختر جولة —"

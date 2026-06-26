@@ -50,6 +50,42 @@ final class WorldCup2026Seeder {
 		'H' => [ [ 'Qatar', 'قطر', 'QAT' ], [ 'Colombia', 'كولومبيا', 'COL' ], [ 'Switzerland', 'سويسرا', 'SUI' ], [ 'Cameroon', 'الكاميرون', 'CMR' ] ],
 	];
 
+	/** FIFA short_code => flag-icons (lipis/flag-icons) asset filename, see assets/img/flags/. */
+	private const FLAG_CODES = [
+		'USA' => 'us',
+		'KSA' => 'sa',
+		'NED' => 'nl',
+		'SEN' => 'sn',
+		'MEX' => 'mx',
+		'ARG' => 'ar',
+		'JPN' => 'jp',
+		'TUN' => 'tn',
+		'CAN' => 'ca',
+		'BRA' => 'br',
+		'CRO' => 'hr',
+		'GHA' => 'gh',
+		'ENG' => 'gb-eng',
+		'ESP' => 'es',
+		'KOR' => 'kr',
+		'MAR' => 'ma',
+		'GER' => 'de',
+		'POR' => 'pt',
+		'AUS' => 'au',
+		'EGY' => 'eg',
+		'FRA' => 'fr',
+		'BEL' => 'be',
+		'NGA' => 'ng',
+		'ECU' => 'ec',
+		'ITA' => 'it',
+		'URU' => 'uy',
+		'IRN' => 'ir',
+		'CRC' => 'cr',
+		'QAT' => 'qa',
+		'COL' => 'co',
+		'SUI' => 'ch',
+		'CMR' => 'cm',
+	];
+
 	/** Scorelines for finished matches, consumed in order across all groups/matchdays. */
 	private const SAMPLE_SCORES = [
 		[ 2, 1 ], [ 1, 1 ], [ 0, 2 ], [ 3, 0 ], [ 1, 0 ], [ 2, 2 ], [ 0, 0 ], [ 1, 2 ],
@@ -142,6 +178,7 @@ final class WorldCup2026Seeder {
 					'name_ar'    => $nameAr,
 					'short_code' => $code,
 					'country'    => $name,
+					'logo_url'   => SCD_STANDINGS_URL . 'assets/img/flags/' . self::FLAG_CODES[ $code ] . '.svg',
 				] );
 
 				$seed = $index + 1;
